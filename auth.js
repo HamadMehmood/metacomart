@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const messageEl = document.getElementById("registerMessage");
 
       try {
-        const res = await fetch("http://localhost:5000/api/auth/register", {
+        const res = await fetch("https://metacomart-2.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password })
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const messageEl = document.getElementById("loginMessage");
 
       try {
-        const res = await fetch("http://localhost:5000/api/auth/login", {
+        const res = await fetch("https://metacomart-2.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password })
