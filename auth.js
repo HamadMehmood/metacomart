@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await res.json();
         messageEl.innerText = data.message;
         messageEl.style.color = "green";
+        // ✅ Redirect to login after 1 second
+setTimeout(() => (window.location.href = "login.html"), 1000);
       } catch (err) {
         messageEl.innerText = "Registration failed.";
         messageEl.style.color = "red";
