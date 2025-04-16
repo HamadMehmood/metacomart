@@ -113,3 +113,7 @@ app.get("/health", (req, res) => {
 
 // ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.get("/", (req, res) => {
+  res.send("🎉 MetacoMart Backend is Live!");
+});
+
