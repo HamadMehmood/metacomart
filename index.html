@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METACO MART - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <header>
+            <div class="container">
+                <div class="logo-container">
+                    <a href="index.html">
+                        <img src="images/logo.jpg" alt="METACO MART Logo" class="site-logo">
+                    </a>
+                </div>
+                <h1>Welcome to METACO MART</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="cart.html">Cart (<span id="cartCount">0</span>)</a></li>
+                       <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+    </header>
+
+    <!-- Hero Section (Dynamic Promotional Banner) -->
+    <section class="hero-section">
+        <div class="banner">
+            <h2>🔥 Flash Sale! Up to 50% OFF on Select Items</h2>
+            <p>Hurry! Offer ends in <span id="flashSaleTimer"></span></p>
+            <a href="products.html" class="shop-now-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Live Search Bar -->
+    <section class="search-section">
+        <h2>Search Products</h2>
+        <input type="text" id="searchBar" placeholder="Search for products..." onkeyup="liveSearch()">
+    </section>
+
+    <!-- Best-Selling Products Section -->
+    <section class="best-sellers">
+        <h2>🔥 Best Sellers</h2>
+        <div id="bestSellers"></div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div id="featuredProducts"></div>
+    </section>
+
+    <!-- Top Categories Section -->
+    <section class="top-categories">
+        <h2>Shop by Category</h2>
+        <div class="category-container">
+            <a href="products.html?category=groceries"><img src="images/groceries.jpg" alt="Groceries"><span>Groceries</span></a>
+            <a href="products.html?category=beverages"><img src="images/beverages.jpg" alt="Beverages"><span>Beverages</span></a>
+            <a href="products.html?category=cleaning"><img src="images/cleaning.jpg" alt="Cleaning"><span>Cleaning</span></a>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials (Slider) -->
+    <section class="customer-testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">"Great prices and excellent service!" - Alex J.</div>
+            <div class="testimonial">"Super fast delivery!" - Emily R.</div>
+            <div class="testimonial">"Love the discounts on bulk purchases!" - Mark T.</div>
+        </div>
+    </section>
+
+    <!-- Loyalty Rewards System -->
+    <section class="loyalty-rewards">
+        <h2>🎁 Earn Rewards & Save More!</h2>
+        <p>Shop & earn loyalty points for every purchase.</p>
+        <button onclick="joinLoyaltyProgram()">Join Now</button>
+    </section>
+
+    <!-- Referral Program -->
+    <section class="referral-program">
+        <h2>Refer & Earn</h2>
+        <p>Refer a friend and get 10% off your next order!</p>
+        <button onclick="generateReferralCode()">Get Referral Code</button>
+        <p id="referralCode"></p>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq">
+            <p onclick="toggleFAQ(this)">📦 How long does delivery take? ➕</p>
+            <p class="faq-answer">Delivery usually takes 3-5 business days.</p>
+        </div>
+        <div class="faq">
+            <p onclick="toggleFAQ(this)">🔄 Can I return a product? ➕</p>
+            <p class="faq-answer">Yes, returns are accepted within 7 days.</p>
+        </div>
+    </section>
+
+    <!-- Scroll to Top & Dark Mode Toggle -->
+    <button id="scrollToTop" style="display: none;">⬆ Scroll to Top</button>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+
+    <script src="script.js"></script>
+    <div class="login-buttons">
+        <button onclick="window.location.href='login.html'">Login</button>
+        <button onclick="window.location.href='register.html'">Register</button>
+    </div>
+    
+</body>
+</html>

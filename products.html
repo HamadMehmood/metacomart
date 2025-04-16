@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METACO MART - Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Our Products</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart (<span id="cartCount">0</span>)</a></li>
+                    
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="order-history.html">orderHistory</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Product Search & Sorting -->
+    <section class="product-filter">
+        <input type="text" id="searchBar" placeholder="Search for products..." onkeyup="searchProducts()">
+        <select id="sortProducts" onchange="sortProducts()">
+            <option value="default">Sort by</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+            <option value="nameAsc">Name: A-Z</option>
+            <option value="nameDesc">Name: Z-A</option>
+        </select>
+    </section>
+
+    <!-- Products Display Section -->
+    <section id="products" class="products-section">
+        <div class="product-list" id="productList"></div>
+    </section>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>

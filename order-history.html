@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METACO MART - Order History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Your Order History</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart (<span id="cartCount">0</span>)</a></li>
+                    <li><a href="order-history.html">Order History</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Order History Section -->
+    <section class="order-history-section">
+        <h2>Your Past Orders</h2>
+        <div id="orderHistory"></div>
+        <button onclick="clearOrderHistory()" class="clear-history-btn">Clear Order History</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
