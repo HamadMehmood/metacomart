@@ -12,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ MongoDB Connection (Replace with your actual credentials)
-mongoose.connect("mongodb+srv://<username>:<password>@cluster0.mongodb.net/metacomart?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://metaco_admin:MongoAtlas@cluster0.mongodb.net/metacomart?retryWrites=true&w=majority")
+
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Error:', err));
 
