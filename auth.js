@@ -9,11 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const messageEl = document.getElementById("registerMessage");
 
       try {
-        const res = await fetch("https://metacomart-2.onrender.com", {
+        const res = await fetch("https://metacomart-2.onrender.com/api/register", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({ username, password })
-        });
+        })
+        
 
         const data = await res.json();
         messageEl.innerText = data.message;
@@ -35,11 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const messageEl = document.getElementById("loginMessage");
 
       try {
-        const res = await fetch("https://metacomart-2.onrender.com", {
+        const res = await fetch("https://metacomart-2.onrender.com/api/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({ username, password })
-        });
+        })
+        
 
         const data = await res.json();
         if (data.token) {
