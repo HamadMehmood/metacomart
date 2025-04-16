@@ -11,12 +11,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('✅ MongoDB Connected'))
+// ✅ MongoDB Connection (Replace with your actual credentials)
+mongoose.connect("mongodb+srv://<username>:<password>@cluster0.mongodb.net/metacomart?retryWrites=true&w=majority&appName=Cluster0")
+  .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Error:', err));
 
+// ✅ Models
 const User = mongoose.model('User', new mongoose.Schema({
   username: String,
   password: String
@@ -39,6 +39,7 @@ const Order = mongoose.model('Order', new mongoose.Schema({
   date: String
 }));
 
+// ✅ Middleware for auth
 const authenticate = (req, res, next) => {
   const token = req.headers['authorization'];
   if (!token) return res.status(401).json({ message: 'No token' });
@@ -50,6 +51,7 @@ const authenticate = (req, res, next) => {
   });
 };
 
+// ✅ Routes
 app.post('/api/register', async (req, res) => {
   const { username, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
@@ -75,7 +77,12 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/order', authenticate, async (req, res) => {
   const { items, total } = req.body;
-  const order = new Order({ userId: req.userId, items, total, date: new Date().toLocaleString() });
+  const order = new Order({
+    userId: req.userId,
+    items,
+    total,
+    date: new Date().toLocaleString()
+  });
   await order.save();
   res.json({ message: 'Order placed' });
 });
@@ -97,6 +104,10 @@ app.post('/api/coupon', (req, res) => {
   res.json({ discount: 0 });
 });
 
+// ✅ Health Check Route for Render
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
+// ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-const orderRoutes = require("./routes/order");
-app.use("/api/order", orderRoutes);
