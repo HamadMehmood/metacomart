@@ -22,6 +22,8 @@ let products = [
   { name: "SOAP - 12", price: 2.99, category: 'groceries', image: "images/soap.jpg", description: "Dove Soap.", discount: 5, stock: 50 },
  
 ];
+
+
 // ✅ RENDER PRODUCTS FUNCTION (ONLY FOR `products.html`)
 function renderProducts() {
   const productList = document.getElementById("productList");
