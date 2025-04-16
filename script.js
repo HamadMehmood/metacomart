@@ -12,15 +12,16 @@ let discount = 0;
 let products = [
   { name: "Rice - 10kg", price: 12.99, category: 'groceries', image: "images/rice.jpg", description: "High-quality basmati rice.", discount: 10, stock: 100 },
   { name: "Flour - 5kg", price: 8.99, category: 'groceries', image: "images/flour.jpg", description: "Premium wheat flour.", discount: 5, stock: 50 },
-  { name: "ANCHOR BUTTER - 500G", price: 3.99, category: 'groceries', image: "images/ANCHOR BUTTER.jpg", description: "Premium ANCHOR BUTTER.", discount: 4, stock: 50 },
-  { name: "RAISING flour - 500G", price: 3.99, category: 'groceries', image: "images/RAISING flour.jpg", description: "Premium ANCHOR BUTTER.", discount: 4, stock: 50 },
-  { name: "COCA COLA - 250ML", price: 5.99, category: 'groceries', image: "images/COCA COLA.jpg", description: "Premium COCA COLA.", discount: 5, stock: 50 },
-  { name: "WHOLE MILK - 1LTR", price: 7.99, category: 'groceries', image: "images/WHOLE MILK.jpg", description: "Premium WHOLE MILK.", discount: 5, stock: 50 },
-  { name: "YOGURT - 1kg", price: 1.99, category: 'groceries', image: "images/YOGURT.jpg", description: "Premium YOGURT.", discount: 5, stock: 50 },
+  { name: "ANCHOR BUTTER - 500G", price: 3.99, category: 'groceries', image: "images/anchorbutter.jpg", description: "Premium ANCHOR BUTTER.", discount: 4, stock: 50 },
+  { name: "RAISING flour - 500G", price: 3.99, category: 'groceries', image: "images/raisingflour.jpg", description: "Premium ANCHOR BUTTER.", discount: 4, stock: 50 },
+  { name: "COCA COLA - 250ML", price: 5.99, category: 'groceries', image: "images/cocacola.jpg", description: "Premium COCA COLA.", discount: 5, stock: 50 },
+  { name: "WHOLE MILK - 1LTR", price: 7.99, category: 'groceries', image: "images/wholemilk.jpg", description: "Premium WHOLE MILK.", discount: 5, stock: 50 },
+  { name: "YOGURT - 1kg", price: 1.99, category: 'groceries', image: "images/yogurt.jpg", description: "Premium YOGURT.", discount: 5, stock: 50 },
   { name: "EGGS - 12", price: 2.99, category: 'groceries', image: "images/eggs.jpg", description: "Premium EGGS.", discount: 5, stock: 50 },
   { name: "BREAD - 100G", price: 6.99, category: 'groceries', image: "images/bread.jpg", description: "Premium BREAD.", discount: 5, stock: 50 },
+  { name: "SOAP - 12", price: 2.99, category: 'groceries', image: "images/soap.jpg", description: "Dove Soap.", discount: 5, stock: 50 },
+ 
 ];
-
 // ✅ RENDER PRODUCTS FUNCTION (ONLY FOR `products.html`)
 function renderProducts() {
   const productList = document.getElementById("productList");
