@@ -12,8 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ MongoDB Connection (Replace with your actual credentials)
-mongoose.connect("mongodb+srv://metaco_admin1:metaco123@cluster0.muy9mqq.mongodb.net/metacomart?retryWrites=true&w=majority&appName=Cluster0")
-
+mongoose.connect("mongodb+srv://metaco_admin:<MongoAtlas>@cluster0.muy9mqq.mongodb.net/metacomart?retryWrites=true&w=majority&appName=Cluster0")
 
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Error:', err));
@@ -113,7 +112,24 @@ app.get("/health", (req, res) => {
 
 // ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-app.get("/", (req, res) => {
-  res.send("🎉 MetacoMart Backend is Live!");
-});
+// POST /api/change-password
+app.post("/api/change-password", authenticate, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
 
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Old password is incorrect" });
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+    user.password = hashed;
+    await user.save();
+
+    return res.json({ message: "Password updated successfully. Please log in again." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
