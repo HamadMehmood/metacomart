@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment - METACO MART</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      padding: 2rem;
+      margin: 0;
+      transition: background 0.3s ease;
+    }
+
+    body.dark {
+      background: #1e1e2f;
+      color: #f1f5f9;
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #0f172a;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle-theme:hover {
+      background: #334155;
+    }
+
+    .payment-section {
+      max-width: 550px;
+      margin: auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 12px 12px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    body.dark .payment-section {
+      background: #2a2a40;
+      box-shadow: 8px 8px 20px #141414;
+    }
+
+    .payment-section h2 {
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin: 0.8rem 0;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
+      transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0f9d58, #34d399);
+      color: #fff;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .checkout-btn:hover {
+      transform: scale(1.02);
+      background: linear-gradient(135deg, #0f9d58, #059669);
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      display: none;
+      color: #6b7280;
+    }
+
+    .card-preview {
+      margin-top: 1rem;
+      padding: 1.2rem;
+      background: linear-gradient(145deg, #60a5fa, #3b82f6);
+      color: white;
+      border-radius: 16px;
+      box-shadow: 4px 4px 20px rgba(59, 130, 246, 0.4);
+      transition: 0.3s ease;
+      transform: rotateY(0deg);
+    }
+
+    body.dark .card-preview {
+      background: linear-gradient(145deg, #2563eb, #1e40af);
+    }
+
+    .card-preview h4, .card-preview p {
+      margin: 5px 0;
+      font-family: monospace;
+    }
+
+    #paymentMessage {
+      margin-top: 10px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toggle-theme" onclick="toggleTheme()">🌗 Toggle Theme</div>
+
+  <section class="payment-section">
+    <h2>Secure Payment</h2>
+    <p>Total Items: <span id="paymentItems">0</span></p>
+    <p>Total Amount: $<span id="paymentTotal">0.00</span></p>
+
+    <form id="paymentForm">
+      <label>Payment Method:</label>
+      <select id="paymentMethod">
+        <option value="card">Credit / Debit Card</option>
+        <option value="paypal">PayPal</option>
+      </select>
+
+      <label>Cardholder Name</label>
+      <input type="text" id="cardName" placeholder="John Doe" required />
+
+      <label>Card Number</label>
+      <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="16" required oninput="updateCardPreview()" />
+
+      <label>Expiry Date</label>
+      <input type="text" id="expiry" placeholder="MM/YY" required />
+
+      <label>CVV</label>
+      <input type="text" id="cvv" placeholder="123" maxlength="4" required />
+
+      <label><input type="checkbox" id="saveCard" /> Save card for future use</label>
+
+      <div class="card-preview" id="cardPreview">
+        <h4>💳 Card Preview</h4>
+        <p>Card Number: <span id="previewNumber">**** **** **** ****</span></p>
+        <p>Cardholder: <span id="previewName">John Doe</span></p>
+      </div>
+
+      <p id="paymentMessage"></p>
+      <div class="loading" id="loading">Processing payment...</div>
+      <button type="submit" class="checkout-btn">💸 Confirm Payment</button>
+    </form>
+  </section>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    document.getElementById("paymentItems").innerText = totalItems;
+    document.getElementById("paymentTotal").innerText = totalAmount.toFixed(2);
+
+    document.getElementById("cardName").addEventListener("input", () => {
+      document.getElementById("previewName").innerText = document.getElementById("cardName").value || "John Doe";
+    });
+
+    function updateCardPreview() {
+      const val = document.getElementById("cardNumber").value.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+      document.getElementById("previewNumber").innerText = val || "**** **** **** ****";
+    }
+
+    document.getElementById("paymentForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("cardName").value.trim();
+      const number = document.getElementById("cardNumber").value.trim();
+      const expiry = document.getElementById("expiry").value.trim();
+      const cvv = document.getElementById("cvv").value.trim();
+      const msg = document.getElementById("paymentMessage");
+      const loader = document.getElementById("loading");
+
+      if (!name || !number || !expiry || !cvv) {
+        msg.textContent = "❌ Please fill in all fields.";
+        msg.style.color = "red";
+        return;
+      }
+
+      msg.textContent = "";
+      loader.style.display = "block";
+
+      setTimeout(() => {
+        // Save order to localStorage
+        const order = {
+          id: Date.now(),
+          items: cart,
+          total: totalAmount.toFixed(2),
+          date: new Date().toLocaleString()
+        };
+        let history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+        history.push(order);
+        localStorage.setItem("orderHistory", JSON.stringify(history));
+        localStorage.removeItem("cart");
+
+        loader.style.display = "none";
+        alert("✅ Payment successful!");
+        window.location.href = "thankyou.html";
+      }, 2000);
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+  </script>
+  <script>
+    document.getElementById("paymentForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+  
+      // Simulate payment success
+      const totalAmount = localStorage.getItem("cart") 
+        ? JSON.parse(localStorage.getItem("cart")).reduce((sum, item) => sum + item.price * item.quantity, 0)
+        : 0;
+  
+      // Save order info to localStorage for thankyou page
+      localStorage.setItem("orderId", "META-" + Date.now());
+      localStorage.setItem("totalAmount", totalAmount.toFixed(2));
+  
+      // Optional: clear cart
+      localStorage.removeItem("cart");
+  
+      // Redirect
+      window.location.href = "thankyou.html";
+    });
+    document.getElementById("confirmPayment").addEventListener("click", async () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const token = localStorage.getItem("token");
+
+  if (cart.length === 0 || !token) {
+    alert("You must be logged in and have items in your cart.");
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  try {
+    const res = await fetch("https://metacomart-2.onrender.com/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({ items: cart, total })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.removeItem("cart"); // clear cart
+      alert("Payment successful and order saved!");
+      window.location.href = "thankyou.html";
+    } else {
+      alert("Order failed: " + data.message);
+    }
+  } catch (err) {
+    alert("Something went wrong.");
+    console.error(err);
+  }
+});
+
+  </script>  
+</body>
+</html>
